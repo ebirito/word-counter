@@ -1,10 +1,34 @@
-﻿namespace WordCounter.CLI
+﻿using WordCounter.IO;
+using WordCounter.Logging;
+
+namespace WordCounter.CLI
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            if (args.Length != 2)
+            {
+                Console.WriteLine("Welcome to WordCounter.CLI");
+                Console.WriteLine("Usage: WordCounter.CLI.exe inputFilePath outputFilePath");
+                return;
+            }
+            
+            ILogger logger = new ConsoleLogger();
+            IInputReader fileReader = new FileInputReader(args[0], logger);
+            IOutputWriter fileWriter = new FileOutputWriter(args[1], (wordCount) => $"{wordCount.Word}, {wordCount.Count}", logger);
+
+            try
+            {
+                var input = await fileReader.ReadInput();
+                var wordCounts = Core.WordCounter.CountWords(input);
+                await fileWriter.WriteOutput(wordCounts);
+            }
+            catch (Exception ex)
+            {
+                await logger.LogException(ex);
+                return;
+            }
         }
     }
 }

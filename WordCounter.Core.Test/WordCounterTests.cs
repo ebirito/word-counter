@@ -87,6 +87,25 @@ namespace WordCounter.Core.Test
             this.AssertWordCounts(expectedWordCounts, actualWordCounts);
         }
 
+        [Test]
+        [TestCase("book", "BOOK")]
+        [TestCase("BOOK", "book")]
+        [TestCase("book", "Book")]
+        public void CountWords_WhenWordsHaveDifferentCasings_ShouldCountThemAsTheSameWord(string word, string wordWithDifferentCasing)
+        {
+            // Arrange
+            string input = $"{word} {wordWithDifferentCasing}";
+            var expectedWordCounts = new List<WordCount>() {
+                new WordCount { Word = word.ToLower(), Count = 2 }
+            };
+
+            // Act
+            var actualWordCounts = WordCounter.CountWords(input);
+
+            // Assert
+            this.AssertWordCounts(expectedWordCounts, actualWordCounts);
+        }
+
         private void AssertWordCounts(IEnumerable<WordCount> expectedWordCounts, IEnumerable<WordCount> actualWordCounts)
         {
             actualWordCounts.Count().Should().Be(expectedWordCounts.Count());
