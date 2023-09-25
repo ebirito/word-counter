@@ -20,8 +20,8 @@ namespace WordCounter.CLI
 
             try
             {
-                var input = await fileReader.ReadInput();
-                var wordCounts = Core.WordCounter.CountWords(input);
+                var lines = await fileReader.ReadInput();
+                var wordCounts = Core.WordCounter.CountWords(lines);
                 await fileWriter.WriteOutput(wordCounts);
             }
             catch (Exception ex)

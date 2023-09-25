@@ -16,7 +16,7 @@ namespace WordCounter.Core.Test
             var expectedWordCounts = new List<WordCount>();
 
             // Act
-            var actualWordCounts = WordCounter.CountWords(input);
+            var actualWordCounts = WordCounter.CountWords(new List<string> { input });
 
             // Assert
             this.AssertWordCounts(expectedWordCounts, actualWordCounts);
@@ -32,7 +32,7 @@ namespace WordCounter.Core.Test
             };
 
             // Act
-            var actualWordCounts = WordCounter.CountWords(input);
+            var actualWordCounts = WordCounter.CountWords(new List<string> { input });
 
             // Assert
             this.AssertWordCounts(expectedWordCounts, actualWordCounts);
@@ -54,7 +54,7 @@ namespace WordCounter.Core.Test
             };
 
             // Act
-            var actualWordCounts = WordCounter.CountWords(input);
+            var actualWordCounts = WordCounter.CountWords(new List<string> { input });
 
             // Assert
             this.AssertWordCounts(expectedWordCounts, actualWordCounts);
@@ -64,9 +64,11 @@ namespace WordCounter.Core.Test
         public void CountWords_WhenMultipleLinePassed_ShouldCountWordsSuccesfully()
         {
             // Arrange
-            string input = "Historically, the world of data " + Environment.NewLine +
-                            "and the world of objects" + Environment.NewLine +
-                            "are the best? Debatable.";
+            List<string> lines = new List<string> {
+                "Historically, the world of data ",
+                "and the world of objects",
+                "are the best? Debatable."
+            };
             var expectedWordCounts = new List<WordCount>() {
                 new WordCount { Word = "the", Count = 3 },
                 new WordCount { Word = "of", Count = 2 },
@@ -81,7 +83,7 @@ namespace WordCounter.Core.Test
             };
 
             // Act
-            var actualWordCounts = WordCounter.CountWords(input);
+            var actualWordCounts = WordCounter.CountWords(lines);
 
             // Assert
             this.AssertWordCounts(expectedWordCounts, actualWordCounts);
@@ -100,7 +102,7 @@ namespace WordCounter.Core.Test
             };
 
             // Act
-            var actualWordCounts = WordCounter.CountWords(input);
+            var actualWordCounts = WordCounter.CountWords(new List<string> { input });
 
             // Assert
             this.AssertWordCounts(expectedWordCounts, actualWordCounts);

@@ -14,7 +14,7 @@ namespace WordCounter.IO
 
         private ILogger Logger;
 
-        public async Task<string> ReadInput()
+        public async Task<IEnumerable<string>> ReadInput()
         {
             if (string.IsNullOrEmpty(this.InputFilePath))
             {
@@ -27,7 +27,7 @@ namespace WordCounter.IO
                 throw new InvalidOperationException(nameof(this.InputFilePath));
             }
 
-            return await File.ReadAllTextAsync(this.InputFilePath);
+            return File.ReadLines(this.InputFilePath);
         }
     }
 }

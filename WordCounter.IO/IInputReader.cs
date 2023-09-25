@@ -2,6 +2,6 @@
 {
     public interface IInputReader
     {
-        Task<string> ReadInput();
+        Task<IEnumerable<string>> ReadInput();
     }
 }
